@@ -10,10 +10,13 @@ class _NewItemScreenState extends State<NewItemScreen> {
   final _nameController = TextEditingController();
   final _brandController = TextEditingController();
   final _priceController = TextEditingController();
-  final _memoController = TextEditingController();
 
-  Item _addItem(String name, String brand, int price, String memo) {
-    return Item(name: name, brand: brand, price: price, memo: memo);
+  Item _addItem(String name, String brand, int price) {
+    return Item(
+      name: name,
+      brand: brand,
+      price: price,
+    );
   }
 
   @override
@@ -21,7 +24,6 @@ class _NewItemScreenState extends State<NewItemScreen> {
     _nameController.dispose();
     _brandController.dispose();
     _priceController.dispose();
-    _memoController.dispose();
     super.dispose();
   }
 
@@ -102,21 +104,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 40.0,
-                  left: 20.0,
-                  right: 20.0,
-                ),
-                child: TextField(
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: InputDecoration(
-//                hintText: 'New Item',
-                    labelText: 'Memo',
-                  ),
-                ),
-              ),
+
               Padding(
                 padding: const EdgeInsets.only(top: 200.0),
                 child: Row(
@@ -154,7 +142,6 @@ class _NewItemScreenState extends State<NewItemScreen> {
                             _nameController.text,
                             _brandController.text,
                             int.parse(_priceController.text),
-                            _memoController.text,
                           );
 
                           _nameController.clear();

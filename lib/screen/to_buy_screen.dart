@@ -15,9 +15,12 @@ class ToBuyScreen extends StatefulWidget {
 class _ToBuyScreenState extends State<ToBuyScreen> {
   void _refresh(int reducePrice) {
     setState(() {
-      widget.total != null
-          ? widget.total = widget.total - reducePrice
-          : print('hello');
+//      widget.total != null
+////          ? widget.total = widget.total - reducePrice
+////          : print('hello');
+      if (widget.total != null) {
+        widget.total = widget.total - reducePrice;
+      }
     });
   }
 
