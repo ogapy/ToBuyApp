@@ -1,35 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tobuy_app/models/item_data.dart';
 import 'package:tobuy_app/properties/format.dart';
 import 'package:tobuy_app/widgets/item_list.dart';
 
 import 'new_item_screen.dart';
 
-class ToBuyScreen extends StatefulWidget {
-  ToBuyScreen({this.total});
-  int total = getAmount();
-  @override
-  _ToBuyScreenState createState() => _ToBuyScreenState();
-}
-
-class _ToBuyScreenState extends State<ToBuyScreen> {
-  void _refresh(int reducePrice) {
-    setState(() {
-//      widget.total != null
-////          ? widget.total = widget.total - reducePrice
-////          : print('hello');
-      if (widget.total != null) {
-        widget.total = widget.total - reducePrice;
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    widget.total = getAmount();
-  }
-
+class ToBuyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +36,19 @@ class _ToBuyScreenState extends State<ToBuyScreen> {
         ],
         elevation: 0.0,
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NewItemScreen()),
+          );
+        },
+      ),
       body: Column(
         children: [
           // 上部
@@ -74,22 +64,12 @@ class _ToBuyScreenState extends State<ToBuyScreen> {
                   ),
                   // 合計金額
                   Text(
-                    widget.total == null
-                        ? '¥${formatter.format(getAmount())}'
-                        : '¥${formatter.format(widget.total)}',
+                    '¥${formatter.format(Provider.of<ItemData>(context).totalAmount)}',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 40.0,
                         fontWeight: FontWeight.bold),
                   ),
-                  // バイト時間で換算
-//                  Text(
-//                    '8h 30min',
-//                    style: TextStyle(
-//                      color: Colors.white,
-//                      fontSize: 30.0,
-//                    ),
-//                  ),
                 ],
               ),
             ),
@@ -117,35 +97,9 @@ class _ToBuyScreenState extends State<ToBuyScreen> {
                       topRight: Radius.circular(60.0),
                       topLeft: Radius.circular(60.0),
                     ),
-                    child: ItemList(
-                      refresh: _refresh,
-                    ),
+                    child: ItemList(),
                   ),
                   // +ボタン
-                  Positioned(
-                    right: 30.0,
-                    bottom: 40.0,
-                    child: FloatingActionButton(
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Theme.of(context).primaryColor,
-                      onPressed: () async {
-                        final result = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NewItemScreen()),
-                        );
-                        if (result != null) {
-                          setState(() {
-                            items.add(result);
-                            widget.total = getAmount();
-                          });
-                        }
-                      },
-                    ),
-                  )
                 ],
               ),
             ),
