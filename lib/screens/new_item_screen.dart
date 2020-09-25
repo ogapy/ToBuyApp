@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tobuy_app/item.dart';
+import 'package:tobuy_app/models/item.dart';
 
 class NewItemScreen extends StatefulWidget {
   @override

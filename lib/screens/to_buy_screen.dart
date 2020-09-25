@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tobuy_app/format.dart';
-import 'package:tobuy_app/item_list2.dart';
+import 'package:tobuy_app/models/item_data.dart';
+import 'package:tobuy_app/properties/format.dart';
+import 'package:tobuy_app/widgets/item_list.dart';
 
-import '../item.dart';
 import 'new_item_screen.dart';
 
 class ToBuyScreen extends StatefulWidget {

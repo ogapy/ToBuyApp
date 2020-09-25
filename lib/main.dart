@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tobuy_app/screen/to_buy_screen.dart';
+import 'package:tobuy_app/screens/to_buy_screen.dart';
 
 void main() {
   runApp(MyApp());

@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
-import 'package:tobuy_app/item.dart';
+import 'package:tobuy_app/models/item.dart';
+import 'package:tobuy_app/models/item_data.dart';
 
-import 'color.dart';
-import 'format.dart';
+import '../properties/color.dart';
+import '../properties/format.dart';
 
 class ItemList extends StatefulWidget {
   int total;
