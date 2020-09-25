@@ -1,34 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tobuy_app/models/item.dart';
+import 'package:provider/provider.dart';
+import 'package:tobuy_app/models/item_data.dart';
+import 'package:tobuy_app/widgets/item_form.dart';
 
-class NewItemScreen extends StatefulWidget {
-  @override
-  _NewItemScreenState createState() => _NewItemScreenState();
-}
-
-class _NewItemScreenState extends State<NewItemScreen> {
-  final _nameController = TextEditingController();
-  final _brandController = TextEditingController();
-  final _priceController = TextEditingController();
-
-  Item _addItem(String name, String brand, int price) {
-    return Item(
-      name: name,
-      brand: brand,
-      price: price,
-    );
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _brandController.dispose();
-    _priceController.dispose();
-    super.dispose();
-  }
-
+class NewItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String newItemName;
+    String newItemBrand;
+    int newItemPrice;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
@@ -51,60 +31,29 @@ class _NewItemScreenState extends State<NewItemScreen> {
           child: Column(
             children: [
               // 商品名フォーム
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 40.0,
-                  left: 20.0,
-                  right: 20.0,
-                ),
-                child: TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-//                hintText: 'New Item',
-                    labelText: 'New Item',
-                  ),
-                ),
+              ItemForm(
+                formLabel: 'Name',
+                isPrice: false,
+                itemFormCallback: (var property) {
+                  newItemName = property;
+                },
               ),
               // ブランドフォーム
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 40.0,
-                  left: 20.0,
-                  right: 20.0,
-                ),
-                child: TextField(
-                  controller: _brandController,
-                  decoration: InputDecoration(
-//                hintText: 'New Item',
-                    labelText: 'Brand',
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        Icons.settings_backup_restore,
-                        size: 30.0,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      padding: EdgeInsets.only(top: 10.0),
-                    ),
-                  ),
-                ),
+              ItemForm(
+                formLabel: 'Brand',
+                isPrice: false,
+                itemFormCallback: (var property) {
+                  newItemBrand = property;
+                },
               ),
               // 金額フォーム
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 40.0,
-                  left: 20.0,
-                  right: 20.0,
-                ),
-                child: TextField(
-                  controller: _priceController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-//                hintText: 'New Item',
-                    labelText: 'Price',
-                  ),
-                ),
+              ItemForm(
+                formLabel: 'Price',
+                isPrice: true,
+                itemFormCallback: (var property) {
+                  newItemPrice = property;
+                },
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 200.0),
                 child: Row(
@@ -138,16 +87,9 @@ class _NewItemScreenState extends State<NewItemScreen> {
                       height: 50.0,
                       child: RaisedButton.icon(
                         onPressed: () {
-                          final Item new_item = _addItem(
-                            _nameController.text,
-                            _brandController.text,
-                            int.parse(_priceController.text),
-                          );
-
-                          _nameController.clear();
-                          _brandController.clear();
-                          _priceController.clear();
-                          Navigator.pop(context, new_item);
+                          Provider.of<ItemData>(context, listen: false)
+                              .addItem(newItemName, newItemBrand, newItemPrice);
+                          Navigator.pop(context);
                         },
                         icon: Icon(
                           Icons.check,
